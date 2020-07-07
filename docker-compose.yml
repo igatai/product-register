@@ -1,0 +1,30 @@
+version: '3'
+
+# docker volume ホスト側にデータを保管
+volumes:
+  data-base:
+
+services:
+  web:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/product-register'
+      # 環境変数の設定
+      environment:
+      - 'DATABASE_PASSWORD=postgres'
+    tty: true
+    stdin_open: true
+    # dbに依存するため先にdbを作る
+    depends_on:
+      - db
+    # webからdbに接続できる
+    links:
+      - db
+
+  db:
+    image: postgres
+    # ホスト側のデータ保管場所
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
