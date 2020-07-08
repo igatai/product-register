@@ -28,3 +28,6 @@ services:
     # ホスト側のデータ保管場所
     volumes:
       - 'db-data:/var/lib/postgresql/data'
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
